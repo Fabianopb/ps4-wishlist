@@ -1,6 +1,8 @@
 import axios from 'axios';
+import moment from 'moment';
 import queryString from 'query-string';
 
+moment.locale('fi');
 axios.defaults.headers.get['x-psn-store-locale-override'] = 'en-FI';
 
 const wishlist = [
@@ -46,7 +48,7 @@ const promises = wishlist.map(game => {
     normalPrice: res.data.data.productRetrieve.webctas[0].price.basePrice,
     discountPrice: res.data.data.productRetrieve.webctas[0].price.discountedPrice,
     discount: res.data.data.productRetrieve.webctas[0].price.discountText,
-    endTime: res.data.data.productRetrieve.webctas[0].price.endTime,
+    endTime: moment(Number(res.data.data.productRetrieve.webctas[0].price.endTime)).format('L LT'),
   }))
   console.log(output);
 })();
