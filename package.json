@@ -1,0 +1,11 @@
+{
+  "name": "ps4-wishlist",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "scripts": {
+    "start": "ts-node src/index.ts"
+  },
+  "author": "",
+  "license": "ISC"
+}
