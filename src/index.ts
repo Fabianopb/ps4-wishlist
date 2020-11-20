@@ -5,8 +5,6 @@ import queryString from 'query-string';
 moment.locale('fi');
 axios.defaults.headers.get['x-psn-store-locale-override'] = 'en-FI';
 
-const sha256Hash = '8532da7eda369efdad054ca8f885394a2d0c22d03c5259a422ae2bb3b98c5c99';
-
 const wishlist = [
   'EP1004-CUSA08519_00-REDEMPTION000002', // RDR2
   'EP0131-NPEJ00518_00-BANNERSAGATRIBUN', // Banner saga trilogy
@@ -50,8 +48,8 @@ type GameResponse = {
 };
 
 const baseUrl = 'https://web.np.playstation.com/api/graphql/v1/op';
-
-const storeBaseLink = 'https://store.playstation.com/en-fi/product';
+// const storeBaseLink = 'https://store.playstation.com/en-fi/product';
+const sha256Hash = '8532da7eda369efdad054ca8f885394a2d0c22d03c5259a422ae2bb3b98c5c99';
 
 const promises = wishlist.map(productId => {
   const variables = { productId: productId };
@@ -67,12 +65,20 @@ const promises = wishlist.map(productId => {
 
 (async () => {
   const responses = await Promise.all(promises);
-  const output = responses.map(res => ({
-    name: res.data.data.productRetrieve.name,
-    normalPrice: res.data.data.productRetrieve.webctas[0].price.basePrice,
-    discountPrice: res.data.data.productRetrieve.webctas[0].price.discountedPrice,
-    discount: res.data.data.productRetrieve.webctas[0].price.discountText,
-    endTime: moment(Number(res.data.data.productRetrieve.webctas[0].price.endTime)).format('L LT'),
-  }))
-  console.log(output);
+  const output = responses.map(res => {
+    const { webctas, name } = res.data.data.productRetrieve;
+    if (webctas.length === 0) {
+      console.warn(`Product "${name}" does not have webcta property`);
+      return undefined;
+    }
+    return {
+      name,
+      normalPrice: webctas[0].price.basePrice,
+      discountPrice: webctas[0].price.discountedPrice,
+      discount: webctas[0].price.discountText,
+      endTime: moment(Number(webctas[0].price.endTime)).format('L LT'),
+    }
+  });
+  const definedOutput = output.filter(<T>(game: T | undefined): game is T => game !== undefined);
+  console.log(definedOutput);
 })();
