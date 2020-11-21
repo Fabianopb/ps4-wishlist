@@ -1,6 +1,7 @@
 import axios from 'axios';
 import moment from 'moment';
 import queryString from 'query-string';
+import { table } from 'table';
 
 moment.locale('fi');
 axios.defaults.headers.get['x-psn-store-locale-override'] = 'en-FI';
@@ -11,13 +12,9 @@ const wishlist = [
   'EP0082-CUSA07187_00-FFVIIREMAKE00000', // FF VII
   'EP0082-CUSA05531_00-FFXIIGAMEPS400EU', // FF XII
   'EP0102-CUSA03840_00-RE456BUND00000EU', // Resident Evil 4, 5, 6,
-  'EP2120-CUSA11235_00-CELESTEXXCELESTE', // Celeste
   'EP3643-CUSA16703_00-GRISPS4SIEE00000', // Gris
-  'EP1156-CUSA04094_00-CROSSBUYPS4PSVIT', // Crypt of the necrodancer
   'EP9000-CUSA12605_00-DEATHSTRAND00001', // Death Stranding
-  'EP0002-CUSA02014_00-KINGSQUECOMPLETE', // King's quest
   'EP2377-CUSA05308_00-EDBASEGAME000000', // Elite Dangerous
-  'EP9000-CUSA07410_00-0000000GODOFWARN', // God of War
   'EP0002-CUSA00433_00-D3ETERNALCOLL000', // Diablo III Collection
   'EP0343-CUSA16052_00-BGANDBGIICONSOLE', // Baldur's Gate
   'EP0850-CUSA02312_00-AXIOMVERGEPSVPS4', // Axiom Verge
@@ -40,7 +37,7 @@ type GameResponse = {
           basePrice: string;
           discountText: string | null;
           discountedPrice: string;
-          endTime: string;
+          endTime: string | null;
         }
       }[];
     };
@@ -63,6 +60,8 @@ const promises = wishlist.map(productId => {
   return axios.get<GameResponse>(`${baseUrl}?${params}`);
 });
 
+const tableHeader = ['Name', 'Price', 'Sale', 'Disc', 'Valid until'];
+
 (async () => {
   const responses = await Promise.all(promises);
   const output = responses.map(res => {
@@ -71,14 +70,17 @@ const promises = wishlist.map(productId => {
       console.warn(`Product "${name}" does not have webcta property`);
       return undefined;
     }
+    const endTime = webctas[0].price.endTime === null ? '' : moment(Number(webctas[0].price.endTime)).format('L LT');
     return {
       name,
       normalPrice: webctas[0].price.basePrice,
       discountPrice: webctas[0].price.discountedPrice,
       discount: webctas[0].price.discountText,
-      endTime: moment(Number(webctas[0].price.endTime)).format('L LT'),
+      endTime,
     }
   });
   const definedOutput = output.filter(<T>(game: T | undefined): game is T => game !== undefined);
-  console.log(definedOutput);
+  const sortedOutput = definedOutput.sort((a, b) => parseInt(a.discount || '0', 10) - parseInt(b.discount || '0', 10));
+  const tableOutput = [tableHeader, ...sortedOutput.map(Object.values)]
+  console.log(table(tableOutput));
 })();
