@@ -35,6 +35,7 @@ const wishlist = [
   'EP0002-CUSA08630_00-CODWWIIGOLDED001', // Call of Duty WWII
   'EP1003-CUSA13275_00-DOOMETERNALBUNDL', // Doom Eternal Standard
   'EP1003-CUSA05486_00-SKYRIMHDFULLGAME', // Skyrim
+  'EP0006-CUSA01499_00-PAMPLONA00000000', // Mirror's Edge
 ];
 
 type GameResponse = {
@@ -74,13 +75,13 @@ const tableHeader = ['Name', 'Price', 'Sale', 'Disc', 'Valid until'].map(h => co
 const getStyledPrice = (price: string) => {
   const parsedPrice = parseInt(price.replace(/[^0-9,.]/g, ""), 10);
   if (parsedPrice < 10) {
-    return colors.green(price);
+    return colors.bgGreen(price);
   }
   if (parsedPrice < 20) {
-    return colors.cyan(price);
+    return colors.bgYellow(price);
   }
   if (parsedPrice < 30) {
-    return colors.yellow(price);
+    return colors.bgCyan(price);
   }
   return colors.gray(price);
 }
