@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.21.0",
+    "colors": "^1.4.0",
     "moment": "^2.29.1",
     "query-string": "^6.13.7",
     "table": "^6.0.4",

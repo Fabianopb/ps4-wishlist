@@ -2,6 +2,7 @@ import axios from 'axios';
 import moment from 'moment';
 import queryString from 'query-string';
 import { table } from 'table';
+import colors from 'colors/safe';
 
 moment.locale('fi');
 axios.defaults.headers.get['x-psn-store-locale-override'] = 'en-FI';
@@ -68,7 +69,21 @@ const promises = wishlist.map(productId => {
   return axios.get<GameResponse>(`${baseUrl}?${params}`);
 });
 
-const tableHeader = ['Name', 'Price', 'Sale', 'Disc', 'Valid until'];
+const tableHeader = ['Name', 'Price', 'Sale', 'Disc', 'Valid until'].map(h => colors.bold(h));
+
+const getStyledPrice = (price: string) => {
+  const parsedPrice = parseInt(price.replace(/[^0-9,.]/g, ""), 10);
+  if (parsedPrice < 10) {
+    return colors.green(price);
+  }
+  if (parsedPrice < 20) {
+    return colors.cyan(price);
+  }
+  if (parsedPrice < 30) {
+    return colors.yellow(price);
+  }
+  return colors.gray(price);
+}
 
 (async () => {
   const responses = await Promise.all(promises);
@@ -82,7 +97,7 @@ const tableHeader = ['Name', 'Price', 'Sale', 'Disc', 'Valid until'];
     return {
       name,
       normalPrice: webctas[0].price.basePrice,
-      discountPrice: webctas[0].price.discountedPrice,
+      discountPrice: getStyledPrice(webctas[0].price.discountedPrice),
       discount: webctas[0].price.discountText,
       endTime,
     }
