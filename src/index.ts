@@ -28,14 +28,14 @@ const wishlist = [
   'EP0290-CUSA16209_00-RISKOFRAIN2SIEE0', // Risk of Rain 2
   'EP0002-CUSA00568_00-DSTCOLLECTION001', // Destiny collection
   'EP2391-CUSA06681_00-THETURINGTEST001', // The Turing Test
-  'EP4497-CUSA18278_00-00000000000000N2', // Cyberpunk 2077
+  // 'EP4497-CUSA18278_00-00000000000000N2', // Cyberpunk 2077 - removed from store
   'EP9001-CUSA02168_00-GTSPORT000000000', // Gran Turismo Sport
   'EP0006-CUSA05749_00-BATTLEFRONTII000', // Star wars Battle Front II
   'EP0002-CUSA08630_00-CODWWIIGOLDED001', // Call of Duty WWII
   'EP1003-CUSA13275_00-DOOMETERNALBUNDL', // Doom Eternal Standard
   'EP1003-CUSA05486_00-SKYRIMHDFULLGAME', // Skyrim
   'EP0320-CUSA05666_00-HYPERLIGHTDRIFTR', // Hyper Light Drifter
-  'EP2054-NPEJ00466_00-INSIDELIMBOBUNDL', // Limbo + Inside
+  // 'EP2054-NPEJ00466_00-INSIDELIMBOBUNDL', // Limbo + Inside - not available
   'EP2107-CUSA00327_00-DONTSTARVEPS4V01', // Don't Starve
   'EP2333-CUSA09919_00-OUTERWILDSSIEE00', // Outer Wilds
 ];
@@ -52,7 +52,7 @@ type GameResponse = {
           endTime: string | null;
         }
       }[];
-    };
+    } | null;
   }
 };
 
@@ -90,10 +90,14 @@ const getStyledPrice = (price: string) => {
 
 (async () => {
   const responses = await Promise.all(promises);
-  const output = responses.map(res => {
+  const output = responses.map((res, index) => {
+    if (!res.data.data.productRetrieve) {
+      console.log(colors.red(`Product with id "${wishlist[index]}" could not be retrieved`));
+      return undefined;
+    }
     const { webctas, name } = res.data.data.productRetrieve;
     if (webctas.length === 0) {
-      console.warn(`Product "${name}" does not have webcta property`);
+      console.log(colors.red(`Product "${name}" does not have webcta property`));
       return undefined;
     }
     const endTime = webctas[0].price.endTime === null ? '' : moment(Number(webctas[0].price.endTime)).format('L LT');
