@@ -38,6 +38,7 @@ const wishlist = [
   // 'EP2054-NPEJ00466_00-INSIDELIMBOBUNDL', // Limbo + Inside - not available
   'EP2107-CUSA00327_00-DONTSTARVEPS4V01', // Don't Starve
   'EP2333-CUSA09919_00-OUTERWILDSSIEE00', // Outer Wilds
+  'EP4139-CUSA07254_00-STELLARISDDE0001', // Stellaris Delux Edition
 ];
 
 type GameResponse = {
