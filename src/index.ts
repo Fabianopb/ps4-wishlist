@@ -8,7 +8,7 @@ moment.locale('fi');
 axios.defaults.headers.get['x-psn-store-locale-override'] = 'en-FI';
 
 const wishlist = [
-  'EP1004-CUSA08519_00-REDEMPTION000002', // RDR2
+  'EP1004-CUSA08519_00-REDEMPTIONFULL02', // RDR2
   'EP0131-NPEJ00518_00-BANNERSAGATRIBUN', // Banner saga trilogy
   'EP0082-CUSA07187_00-FFVIIREMAKE00000', // FF VII
   'EP0082-CUSA05531_00-FFXIIGAMEPS400EU', // FF XII
@@ -39,7 +39,18 @@ const wishlist = [
   'EP2107-CUSA00327_00-DONTSTARVEPS4V01', // Don't Starve
   'EP2333-CUSA09919_00-OUTERWILDSSIEE00', // Outer Wilds
   'EP4139-CUSA07254_00-STELLARISDDE0001', // Stellaris Delux Edition
+  'EP0177-CUSA15036_00-CFBDIGITALDELUXE', // Catherine Deluxe
+  'EP1188-CUSA03200_00-HPL3SOMAGAME2015', // SOMA
+  'EP2333-CUSA07974_00-WHATREMAINSFINCH', // Edith Finch
+  'EP0700-CUSA08495_00-DARKSOULSHD00000', // Dark Souls
+  'EP9000-CUSA08809_00-SOTC0000000000EU', // Shadow of the Colossus
+  'EP1003-CUSA00320_00-WOLFENSTEIN00001', // Wolfenstein: The New Order
+  'EP9000-CUSA10211_00-HRZCE00000000000', // Horizon Zero Dawn Complete Edition
+  
 ];
+
+// PS3 only
+// Resistance series
 
 type GameResponse = {
   data: {
