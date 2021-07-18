@@ -45,6 +45,9 @@ const wishlist = [
   'EP9000-CUSA10211_00-HRZCE00000000000', // Horizon Zero Dawn Complete Edition
   'EP4365-CUSA16260_00-COMMANDOS2HD0001', // Commandos 2 - HD Remaster
   'EP0001-NPEJ00305_00-B000000000001030', // Child of Light
+  'EP4293-CUSA24722_00-0924011560021288', // Quantum Replica
+  'EP4176-PPSA02117_00-8201964206903574', // Observer System Redux
+  'EP2520-CUSA23292_00-DISJUNCTIONBUNDL', // Disjunction
 ];
 
 // PS3 only
