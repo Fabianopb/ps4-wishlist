@@ -63,6 +63,10 @@ const wishlist = [
   'EP0700-CUSA05952_00-LITTLENIGHTMARES', // Little Nightmares I
   'EP0700-PPSA02154_00-LITTLENIGHTS2000', // Little Nightmares II
   'EP1003-CUSA16296_00-DOOM64X199700000', // Doom 64
+  'EP0001-CUSA04893_00-ACLEGACYHD000000', // Assassin's Creed Ezio Collection
+  'EP0001-CUSA09303_00-GAME000000000000', // Assassin's Creed Odyssey
+  'EP0001-CUSA05625_00-GAMEACEMPIRE0000', // Assassin's Creed Origins
+  'EP0001-PPSA01490_00-GAME000000000000', // Assassin's Creed Valhalla
 ];
 
 // PS3 only
