@@ -3,6 +3,7 @@ import moment from 'moment';
 import queryString from 'query-string';
 import { table } from 'table';
 import colors from 'colors/safe';
+import commandLineArgs from 'command-line-args';
 
 moment.locale('fi');
 axios.defaults.headers.get['x-psn-store-locale-override'] = 'en-FI';
@@ -93,6 +94,10 @@ const baseUrl = 'https://web.np.playstation.com/api/graphql/v1/op';
 // const storeBaseLink = 'https://store.playstation.com/en-fi/product';
 const sha256Hash = '8532da7eda369efdad054ca8f885394a2d0c22d03c5259a422ae2bb3b98c5c99';
 
+const options = commandLineArgs([
+  { name: 'filter', alias: 'f', type: String }
+]);
+
 const promises = wishlist.map(productId => {
   const variables = { productId: productId };
   const extensions = { persistedQuery: { version: 1, sha256Hash } };
@@ -143,8 +148,10 @@ const getStyledPrice = (price: string) => {
     }
   });
   const definedOutput = output.filter(<T>(game: T | undefined): game is T => game !== undefined);
-  const sortedOutput = definedOutput.sort((a, b) => parseInt(a.discount || '0', 10) - parseInt(b.discount || '0', 10));
+  const filteredOutput = options.filter
+    ? definedOutput.filter(game => game.name.toLowerCase().includes(options.filter.toLowerCase()))
+    : definedOutput;
+  const sortedOutput = filteredOutput.sort((a, b) => parseInt(a.discount || '0', 10) - parseInt(b.discount || '0', 10));
   const tableOutput = [tableHeader, ...sortedOutput.map(Object.values)]
-  console.log(process.argv);
   console.log(table(tableOutput));
 })();
