@@ -72,7 +72,10 @@ const ps4Wishlist = [
 ];
 
 const ps3Wishlist = [
-  '36046/tales-of-xillia', // Tales of Xilia
+  '36046/tales-of-xillia',
+  '36179/tales-of-graces-f',
+  '35721/resistance-fall-of-man',
+  '35720/resistance-2',
 ];
 
 // PS3 only
@@ -117,7 +120,7 @@ const ps4Promises = ps4Wishlist.map(productId => {
 });
 
 const ps3Promises = ps3Wishlist.map(productId => {
-  return axios.get<string>(`${ps3BaseUrl}${ps3Wishlist[0]}`);
+  return axios.get<string>(`${ps3BaseUrl}${productId}`);
 });
 
 const ps4TableHeader = ['Name', 'Price', 'Sale', 'Disc', 'Valid until'].map(h => colors.bold(h));
