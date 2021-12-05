@@ -67,6 +67,7 @@ const wishlist = [
   'EP0001-CUSA09303_00-GAME000000000000', // Assassin's Creed Odyssey
   'EP0001-CUSA05625_00-GAMEACEMPIRE0000', // Assassin's Creed Origins
   'EP0001-PPSA01490_00-GAME000000000000', // Assassin's Creed Valhalla
+  'EP0001-CUSA00016_00-B000000000000752', // Watch Dogs
 ];
 
 // PS3 only
@@ -144,5 +145,6 @@ const getStyledPrice = (price: string) => {
   const definedOutput = output.filter(<T>(game: T | undefined): game is T => game !== undefined);
   const sortedOutput = definedOutput.sort((a, b) => parseInt(a.discount || '0', 10) - parseInt(b.discount || '0', 10));
   const tableOutput = [tableHeader, ...sortedOutput.map(Object.values)]
+  console.log(process.argv);
   console.log(table(tableOutput));
 })();
