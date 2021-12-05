@@ -8,7 +8,7 @@ import commandLineArgs from 'command-line-args';
 moment.locale('fi');
 axios.defaults.headers.get['x-psn-store-locale-override'] = 'en-FI';
 
-const wishlist = [
+const ps4Wishlist = [
   'EP1004-CUSA08519_00-REDEMPTIONFULL02', // RDR2
   'EP0131-NPEJ00518_00-BANNERSAGATRIBUN', // Banner saga trilogy
   'EP0082-CUSA07187_00-FFVIIREMAKE00000', // FF VII
@@ -71,6 +71,10 @@ const wishlist = [
   'EP0001-CUSA00016_00-B000000000000752', // Watch Dogs
 ];
 
+const ps3Wishlist = [
+  '36046/tales-of-xillia', // Tales of Xilia
+];
+
 // PS3 only
 // Resistance series
 
@@ -90,15 +94,17 @@ type GameResponse = {
   }
 };
 
-const baseUrl = 'https://web.np.playstation.com/api/graphql/v1/op';
+const ps4BaseUrl = 'https://web.np.playstation.com/api/graphql/v1/op';
 // const storeBaseLink = 'https://store.playstation.com/en-fi/product';
 const sha256Hash = '8532da7eda369efdad054ca8f885394a2d0c22d03c5259a422ae2bb3b98c5c99';
+
+const ps3BaseUrl = 'https://psdeals.net/fi-store/game/';
 
 const options = commandLineArgs([
   { name: 'filter', alias: 'f', type: String }
 ]);
 
-const promises = wishlist.map(productId => {
+const ps4Promises = ps4Wishlist.map(productId => {
   const variables = { productId: productId };
   const extensions = { persistedQuery: { version: 1, sha256Hash } };
   const queryParams = {
@@ -107,10 +113,16 @@ const promises = wishlist.map(productId => {
     extensions: JSON.stringify(extensions),
   };
   const params = queryString.stringify(queryParams);
-  return axios.get<GameResponse>(`${baseUrl}?${params}`);
+  return axios.get<GameResponse>(`${ps4BaseUrl}?${params}`);
 });
 
-const tableHeader = ['Name', 'Price', 'Sale', 'Disc', 'Valid until'].map(h => colors.bold(h));
+const ps3Promises = ps3Wishlist.map(productId => {
+  return axios.get<string>(`${ps3BaseUrl}${ps3Wishlist[0]}`);
+});
+
+const ps4TableHeader = ['Name', 'Price', 'Sale', 'Disc', 'Valid until'].map(h => colors.bold(h));
+
+const ps3TableHeader = ['Name', 'Price'].map(h => colors.bold(h));
 
 const getStyledPrice = (price: string) => {
   const parsedPrice = parseInt(price.replace(/[^0-9,.]/g, ""), 10);
@@ -127,10 +139,10 @@ const getStyledPrice = (price: string) => {
 }
 
 (async () => {
-  const responses = await Promise.all(promises);
-  const output = responses.map((res, index) => {
+  const ps4Responses = await Promise.all(ps4Promises);
+  const ps4Output = ps4Responses.map((res, index) => {
     if (!res.data.data.productRetrieve) {
-      console.log(colors.red(`Product with id "${wishlist[index]}" could not be retrieved`));
+      console.log(colors.red(`Product with id "${ps4Wishlist[index]}" could not be retrieved`));
       return undefined;
     }
     const { webctas, name } = res.data.data.productRetrieve;
@@ -147,11 +159,23 @@ const getStyledPrice = (price: string) => {
       endTime,
     }
   });
-  const definedOutput = output.filter(<T>(game: T | undefined): game is T => game !== undefined);
-  const filteredOutput = options.filter
-    ? definedOutput.filter(game => game.name.toLowerCase().includes(options.filter.toLowerCase()))
-    : definedOutput;
-  const sortedOutput = filteredOutput.sort((a, b) => parseInt(a.discount || '0', 10) - parseInt(b.discount || '0', 10));
-  const tableOutput = [tableHeader, ...sortedOutput.map(Object.values)]
-  console.log(table(tableOutput));
+  const ps4DefinedOutput = ps4Output.filter(<T>(game: T | undefined): game is T => game !== undefined);
+  const ps4FilteredOutput = options.filter
+    ? ps4DefinedOutput.filter(game => game.name.toLowerCase().includes(options.filter.toLowerCase()))
+    : ps4DefinedOutput;
+  const ps4SortedOutput = ps4FilteredOutput.sort((a, b) => parseInt(a.discount || '0', 10) - parseInt(b.discount || '0', 10));
+  const ps4TableOutput = [ps4TableHeader, ...ps4SortedOutput.map(Object.values)]
+  console.log(table(ps4TableOutput));
+
+  const ps3Responses = await Promise.all(ps3Promises);
+  const ps3Output = ps3Responses.map(htmlResponse => {
+    const name = htmlResponse.data.match(/(?<="game-title-info-name">).*(?=<\/div)/g)
+    const price = htmlResponse.data.match(/(?<="game-collection-item-regular-price ">).*(?=<\/span)/g)
+    return { name: name ? name[0] : '<not-found>', price: price ? price[0] : '<not-found>' };
+  });
+  const ps3FilteredOutput = options.filter
+    ? ps3Output.filter(game => game.name.toLowerCase().includes(options.filter.toLowerCase()))
+    : ps3Output;
+  const ps3TableOutput = [ps3TableHeader, ...ps3FilteredOutput.map(Object.values)]
+  console.log(table(ps3TableOutput));
 })();
