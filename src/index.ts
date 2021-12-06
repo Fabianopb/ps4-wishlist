@@ -69,6 +69,9 @@ const ps4Wishlist = [
   'EP0001-CUSA05625_00-GAMEACEMPIRE0000', // Assassin's Creed Origins
   'EP0001-PPSA01490_00-GAME000000000000', // Assassin's Creed Valhalla
   'EP0001-CUSA00016_00-B000000000000752', // Watch Dogs
+  'EP1001-CUSA03985_00-BIOSHOCKCOLLECTN', // Bioshock collection
+  'EP0700-CUSA13079_00-NINOKUNIWOTWW000', // Ni No Kuni
+  'EP0700-CUSA09243_00-NNK2GAME00000000', // Ni No Kuni II
 ];
 
 const ps3Wishlist = [
@@ -76,6 +79,9 @@ const ps3Wishlist = [
   '36179/tales-of-graces-f',
   '35721/resistance-fall-of-man',
   '35720/resistance-2',
+  '37074/infamous-50-off',
+  '37073/infamous-2',
+  
 ];
 
 // PS3 only
