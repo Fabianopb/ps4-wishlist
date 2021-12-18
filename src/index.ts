@@ -54,7 +54,6 @@ const ps4Wishlist = [
   'EP0082-PPSA01779_00-1955314285649692', // Outriders
   'EP4062-PPSA01749_00-522MEEGOLDEDGEN9', // Metro Exodus Gold Edition
   // 'EP1003-CUSA24594_00-QKRMST0000000000', // Quake remaster is not in the store, there's only Quake now
-  'EP0700-CUSA12287_00-PS4TOVHD00000001', // Tales of Vesperia
   'EP0700-NPEB02235_00-TOZ00000DIGEDPS3', // Tales of Zestiria
   'EP0700-CUSA05105_00-PS4TOBERSERIA001', // Tales of Berseria
   'EP0700-PPSA02745_00-TOARISEPS5000001', // Tales of Arise
@@ -63,8 +62,6 @@ const ps4Wishlist = [
   'EP1464-PPSA01925_00-AWREMASTERED0001', // Alan Wake
   'EP0700-CUSA05952_00-LITTLENIGHTMARES', // Little Nightmares I
   'EP0700-PPSA02154_00-LITTLENIGHTS2000', // Little Nightmares II
-  'EP1003-CUSA16296_00-DOOM64X199700000', // Doom 64
-  'EP0001-CUSA04893_00-ACLEGACYHD000000', // Assassin's Creed Ezio Collection
   'EP0001-CUSA09303_00-GAME000000000000', // Assassin's Creed Odyssey
   'EP0001-CUSA05625_00-GAMEACEMPIRE0000', // Assassin's Creed Origins
   'EP0001-PPSA01490_00-GAME000000000000', // Assassin's Creed Valhalla
@@ -72,6 +69,8 @@ const ps4Wishlist = [
   'EP1001-CUSA03985_00-BIOSHOCKCOLLECTN', // Bioshock collection
   'EP0700-CUSA13079_00-NINOKUNIWOTWW000', // Ni No Kuni
   'EP0700-CUSA09243_00-NNK2GAME00000000', // Ni No Kuni II
+  'EP4133-CUSA02762_00-DIVINITYPS4BUNDL', // Divinity
+  'EP3383-CUSA11898_00-ORIGINALSIN2DE02', // Divinity II
 ];
 
 const ps3Wishlist = [
@@ -81,6 +80,7 @@ const ps3Wishlist = [
   '35720/resistance-2',
   '37074/infamous-50-off',
   '37073/infamous-2',
+  '35922/xcom-enemy-within',
   
 ];
 
