@@ -73,11 +73,11 @@ const ps4Wishlist = [
   'EP3383-CUSA11898_00-ORIGINALSIN2DE02', // Divinity II
   'EP1004-CUSA04488_00-SLES503260000001', // Max Payne
   'EP0082-CUSA27688_00-0299001029018095', // Tomb Raider Trylogy
+  'EP0700-PPSA04609_00-ELDENRING0000000', // Elden Ring
 ];
 
 const ps3Wishlist = [
   '36046/tales-of-xillia',
-  '36179/tales-of-graces-f',
   '35721/resistance-fall-of-man',
   '35720/resistance-2',
   '37074/infamous-50-off',
