@@ -74,6 +74,7 @@ const ps4Wishlist = [
   'EP1004-CUSA04488_00-SLES503260000001', // Max Payne
   'EP0082-CUSA27688_00-0299001029018095', // Tomb Raider Trylogy
   'EP0700-PPSA04609_00-ELDENRING0000000', // Elden Ring
+  'EP0965-CUSA05051_00-OXENBASEENUS0000', // Oxenfree
 ];
 
 const ps3Wishlist = [
